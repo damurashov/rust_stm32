@@ -20,6 +20,18 @@ SECTIONS {
         *(.text .text.*);
     } > FLASH
 
+    .data : {
+        $(.data .data.*);
+    } > SRAM
+
+    .rodata : {
+        $(.rodata .rodata.*);
+    } > FLASH
+
+    .bss : {
+        $(.bss .bss.*)
+    } > SRAM
+
     /DISCARD/ : {
         *(.ARM.exidx .ARM.exidx.*);
     }
