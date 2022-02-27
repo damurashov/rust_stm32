@@ -18,6 +18,16 @@ pub unsafe extern "C" fn reset() -> ! {
 	main()
 }
 
+#[macro_export]
+macro_rules! entry_point {
+	($entry_point:path) => {
+		pub fn __main() -> ! {
+			let f: fn() -> ! = $entry_point;
+			f()
+		}
+	}
+}
+
 #[no_mangle]
 #[link_section = ".vector_table.reset_vector"]
 pub static RESET_VECTOR: unsafe extern "C" fn() -> ! = reset;
