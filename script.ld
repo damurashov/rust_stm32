@@ -1,6 +1,6 @@
 MEMORY {
-	FLASH : ORIGIN = 0x08000000, LENGTH = 16K
-	SRAM :  ORIGIN = 0x20000000, LENGTH = 4K
+	FLASH(rx) :  ORIGIN = 0x08000000, LENGTH = 16K
+	SRAM(rwx) :  ORIGIN = 0x20000000, LENGTH = 4K
 }
 
 ENTRY(reset);
@@ -21,18 +21,23 @@ SECTIONS {
 	} > FLASH
 
 	.bss : {
+		. = ALIGN(4);
 		_sbss = .;
-		$(.bss .bss.*)
+		*(.bss .bss.*)
+		. = ALIGN(4);
 		_ebss = .;
 	} > SRAM
 
 	.rodata : {
-		$(.rodata .rodata.*);
+		. = ALIGN(4);
+		*(.rodata .rodata.*);
 	} > FLASH
 
 	.data : AT(ADDR(.rodata) + SIZEOF(.rodata)) {
+		. = ALIGN(4);
 		_sdata = .;
-		$(.data .data.*);
+		*(.data .data.*);
+		. = ALIGN(4);
 		_edata = .;
 	} > SRAM
 
