@@ -6,6 +6,7 @@ MEMORY {
 ENTRY(reset);
 
 EXTERN(RESET_VECTOR);
+EXTERN(EXCEPTIONS);
 
 SECTIONS {
 	.vector_table ORIGIN(FLASH): {
@@ -13,6 +14,8 @@ SECTIONS {
 		LONG(ORIGIN(SRAM) + LENGTH(SRAM));
 
 		/* Do not eliminate (optimize out) .reset_vector symbol at linking stage */
+		KEEP(*(.vector_table.reset_vector));
+
 		KEEP(*(.vector_table.reset_vector));
 	} > FLASH
 
@@ -47,3 +50,9 @@ SECTIONS {
 		*(.ARM.exidx .ARM.exidx.*);
 	}
 }
+
+PROVIDE(nmi = default_exception_handler);
+PROVIDE(hard_fault = default_exception_handler);
+PROVIDE(sv_call = default_exception_handler);
+PROVIDE(pend_sv = default_exception_handler);
+PROVIDE(sys_tick = default_exception_handler);

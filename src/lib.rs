@@ -5,6 +5,43 @@
 use core::panic::PanicInfo;
 use core::ptr;
 
+pub union VectorEntry {
+	reserved: u32,
+	handler: unsafe extern "C" fn(),
+}
+
+extern "C" {
+	fn nmi();
+	fn hard_fault();
+	fn sv_call();
+	fn pend_sv();
+	fn sys_tick();
+}
+
+#[export_name = "default_exception_handler"]
+pub fn default_exception_handler() -> ! {
+	loop {}
+}
+
+#[link_section = ".vector_table.exceptions"]
+#[no_mangle]
+pub static EXCEPTIONS: [VectorEntry; 14] = [
+	VectorEntry {handler: nmi},
+	VectorEntry {handler: hard_fault},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {handler: sv_call},
+	VectorEntry {reserved: 0},
+	VectorEntry {reserved: 0},
+	VectorEntry {handler: pend_sv},
+	VectorEntry {handler: sys_tick},
+];
+
 #[panic_handler]
 fn panic(_panic: &PanicInfo<'_>) -> ! {
 	loop {}
