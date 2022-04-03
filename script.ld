@@ -16,7 +16,7 @@ SECTIONS {
 		/* Do not eliminate (optimize out) .reset_vector symbol at linking stage */
 		KEEP(*(.vector_table.reset_vector));
 
-		KEEP(*(.vector_table.reset_vector));
+		KEEP(*(.vector_table.exceptions));
 	} > FLASH
 
 	.text : {
