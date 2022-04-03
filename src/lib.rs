@@ -12,7 +12,7 @@ pub union VectorEntry {
 
 extern "C" {
 	fn nmi();
-	fn hard_fault();
+	fn hard_fault_trampoline();
 	fn sv_call();
 	fn pend_sv();
 	fn sys_tick();
@@ -27,7 +27,7 @@ pub fn default_exception_handler() -> ! {
 #[no_mangle]
 pub static EXCEPTIONS: [VectorEntry; 14] = [
 	VectorEntry {handler: nmi},
-	VectorEntry {handler: hard_fault},
+	VectorEntry {handler: hard_fault_trampoline},
 	VectorEntry {reserved: 0},
 	VectorEntry {reserved: 0},
 	VectorEntry {reserved: 0},
