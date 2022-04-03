@@ -7,9 +7,11 @@ edition = "2021"
 
 [dependencies]
 
+[build-dependencies]
+cc = "1.0.73"
+
 # alternatives to "eh_personality"
 # [profile.dev]
 # panic = "abort"
 # [profile.release]
 # panic = "abort"
-
