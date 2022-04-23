@@ -7,6 +7,7 @@ ENTRY(reset);
 
 EXTERN(RESET_VECTOR);
 EXTERN(EXCEPTIONS);
+EXTERN(malloc)
 
 SECTIONS {
 	.vector_table ORIGIN(FLASH): {
@@ -46,9 +47,13 @@ SECTIONS {
 
 	_sidata = LOADADDR(.data);
 
-	/DISCARD/ : {
+	/* /DISCARD/ : {
 		*(.ARM.exidx .ARM.exidx.*);
-	}
+	} */
+
+	.ARM : {
+		KEEP(*(.ARM*malloc))
+	} > FLASH
 }
 
 PROVIDE(nmi = default_exception_handler);

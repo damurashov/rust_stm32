@@ -16,6 +16,7 @@ extern "C" {
 	fn sv_call();
 	fn pend_sv();
 	fn sys_tick();
+	fn malloc(sz: usize) -> *mut u8;
 }
 
 #[export_name = "default_exception_handler"]
@@ -68,6 +69,7 @@ pub unsafe extern "C" fn reset() -> ! {
 		fn main() -> !;
 	}
 
+	malloc(42);
 	main()
 }
 
