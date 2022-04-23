@@ -1,5 +1,6 @@
 [target.thumbv6m-none-eabi]
-rustflags = ["-C", "link-arg=-Tscript.ld" ]
+# rustflags = ["-C", "link-arg=-Tscript.ld", "-lc,-lm,-lnosys"]
+rustflags = ["-C", "link-arg=-Tscript.ld", "-lc"]
 
 [build]
 target = "thumbv6m-none-eabi"
