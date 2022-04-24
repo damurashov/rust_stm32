@@ -46,6 +46,17 @@ SECTIONS {
 
 	_sidata = LOADADDR(.data);
 
+	/* The remaning space is where heap and stack reside */
+	.heap_and_stack : {
+		. = ALIGN(4);
+
+		/* Symbol `end` is required for libc. The ARM toolchain "rustup" installs does not seem to provide standard
+		libc's `malloc` calls or alternatives, so we borrow pre-compiled static `libc` and `libnosys` libraries from
+		arm-none-eabi-gcc-10 package and wrap the memory managing code around it */
+
+		PROVIDE(end = .);
+	} > SRAM
+
 	/DISCARD/ : {
 		*(.ARM.exidx .ARM.exidx.*);
 	}
