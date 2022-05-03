@@ -68,3 +68,4 @@ PROVIDE(sv_call = default_exception_handler);
 PROVIDE(pend_sv = default_exception_handler);
 PROVIDE(sys_tick = default_exception_handler);
 PROVIDE(wwdg_irq = default_exception_handler);
+PROVIDE(tim14_irq = default_exception_handler);
