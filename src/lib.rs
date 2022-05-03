@@ -16,6 +16,7 @@ extern "C" {
 	fn sv_call();
 	fn pend_sv();
 	fn sys_tick();
+	fn wwdg_irq();
 }
 
 #[export_name = "default_exception_handler"]
@@ -25,7 +26,7 @@ pub fn default_exception_handler() -> ! {
 
 #[link_section = ".vector_table.exceptions"]
 #[no_mangle]
-pub static EXCEPTIONS: [VectorEntry; 14] = [
+pub static EXCEPTIONS: [VectorEntry; 35] = [
 	VectorEntry {handler: nmi},
 	VectorEntry {handler: hard_fault_trampoline},
 	VectorEntry {reserved: 0},
@@ -40,6 +41,27 @@ pub static EXCEPTIONS: [VectorEntry; 14] = [
 	VectorEntry {reserved: 0},
 	VectorEntry {handler: pend_sv},
 	VectorEntry {handler: sys_tick},
+	VectorEntry {handler: wwdg_irq},  // WWDG
+	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  // RTC
+	VectorEntry {reserved: 0},  // FLASH
+	VectorEntry {reserved: 0},  // RCC
+	VectorEntry {reserved: 0},  // EXTI0_1
+	VectorEntry {reserved: 0},  // EXTI2_3
+	VectorEntry {reserved: 0},  // EXTI4_15
+	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  // DMA_CH1
+	VectorEntry {reserved: 0},  // DMA_CH2_3
+	VectorEntry {reserved: 0},  // DMA_CH4_5
+	VectorEntry {reserved: 0},  // ADC
+	VectorEntry {reserved: 0},  // TIM1_BRK_UP_TRG_COM
+	VectorEntry {reserved: 0},  // TIM1_CC
+	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  // TIM3
+	VectorEntry {reserved: 0},  // TIM_6
+	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  // TIM14
 ];
 
 #[panic_handler]
