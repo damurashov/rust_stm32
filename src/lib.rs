@@ -17,6 +17,7 @@ extern "C" {
 	fn pend_sv();
 	fn sys_tick();
 	fn wwdg_irq();
+	fn tim14_irq();
 }
 
 #[export_name = "default_exception_handler"]
