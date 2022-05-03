@@ -62,7 +62,7 @@ pub static EXCEPTIONS: [VectorEntry; 35] = [
 	VectorEntry {reserved: 0},  // TIM_6
 	VectorEntry {reserved: 0},  // Reserved
 	VectorEntry {reserved: 0},  // Reserved
-	VectorEntry {reserved: 0},  // TIM14
+	VectorEntry {handler: tim14_irq},  // TIM14
 ];
 
 #[panic_handler]
