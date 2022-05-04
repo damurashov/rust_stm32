@@ -27,7 +27,7 @@ pub fn default_exception_handler() -> ! {
 
 #[link_section = ".vector_table.exceptions"]
 #[no_mangle]
-pub static EXCEPTIONS: [VectorEntry; 35] = [
+pub static EXCEPTIONS: [VectorEntry; 34] = [
 	VectorEntry {handler: nmi},
 	VectorEntry {handler: hard_fault_trampoline},
 	VectorEntry {reserved: 0},
@@ -59,8 +59,7 @@ pub static EXCEPTIONS: [VectorEntry; 35] = [
 	VectorEntry {reserved: 0},  // TIM1_CC
 	VectorEntry {reserved: 0},  // Reserved
 	VectorEntry {reserved: 0},  // TIM3
-	VectorEntry {reserved: 0},  // TIM_6
-	VectorEntry {reserved: 0},  // Reserved
+	VectorEntry {reserved: 0},  //
 	VectorEntry {reserved: 0},  // Reserved
 	VectorEntry {handler: tim14_irq},  // TIM14
 ];
