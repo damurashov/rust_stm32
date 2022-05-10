@@ -3,7 +3,7 @@ MEMORY {
 	SRAM(rwx) :  ORIGIN = 0x20000000, LENGTH = 4K
 }
 
-ENTRY(reset);
+ENTRY(reset_trampoline);
 
 EXTERN(RESET_VECTOR);
 EXTERN(EXCEPTIONS);
@@ -62,6 +62,7 @@ SECTIONS {
 	}
 }
 
+PROVIDE(reset = default_exception_handler);
 PROVIDE(nmi = default_exception_handler);
 PROVIDE(hard_fault = default_exception_handler);
 PROVIDE(sv_call = default_exception_handler);
