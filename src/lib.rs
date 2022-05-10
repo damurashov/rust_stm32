@@ -11,6 +11,7 @@ pub union VectorEntry {
 }
 
 extern "C" {
+	fn reset_trampoline() -> !;
 	fn nmi();
 	fn hard_fault_trampoline();
 	fn sv_call();
@@ -105,7 +106,7 @@ macro_rules! entry_point {
 
 #[no_mangle]
 #[link_section = ".vector_table.reset_vector"]
-pub static RESET_VECTOR: unsafe extern "C" fn() -> ! = reset;
+pub static RESET_VECTOR: unsafe extern "C" fn() -> ! = reset_trampoline;
 
 #[lang = "eh_personality"]
 extern "C" fn eh_personality() {}
