@@ -4,14 +4,21 @@ MEMORY {
 }
 
 ENTRY(reset_trampoline);
-
 EXTERN(RESET_VECTOR);
 EXTERN(EXCEPTIONS);
+
+/* To prevent exception handlers from corrupting PSP stack when in exception mode due to overlaps, a boundary for
+exception handling stack will be used. So, PSP will be initialized w/ PSP + _msp_area_size  */
+
+_msp_initial = ORIGIN(SRAM) + LENGTH(SRAM);  /* Initial value for the MSP stack pointer */
+_msp_area_size = 0x200;  /* Number of bytes for exception handling stack (pointed to by MSP stack pointer) */
+_psp_initial = _msp_initial - _msp_area_size;
 
 SECTIONS {
 	.vector_table ORIGIN(FLASH): {
 		/* Stack pointer's initial value */
-		LONG(ORIGIN(SRAM) + LENGTH(SRAM));
+		/* LONG(ORIGIN(SRAM) + LENGTH(SRAM)); */
+		LONG(_msp_initial);
 
 		/* Do not eliminate (optimize out) .reset_vector symbol at linking stage */
 		KEEP(*(.vector_table.reset_vector));
