@@ -6,6 +6,8 @@ MEMORY {
 ENTRY(reset_trampoline);
 EXTERN(RESET_VECTOR);
 EXTERN(EXCEPTIONS);
+EXTERN(get_stack_frame_current);
+EXTERN(get_stack_frame_next);
 
 /* To prevent exception handlers from corrupting PSP stack when in exception mode due to overlaps, a boundary for
 exception handling stack will be used. So, PSP will be initialized w/ PSP + _msp_area_size  */
@@ -26,7 +28,19 @@ SECTIONS {
 	} > FLASH
 
 	.text : {
+		/* Bring Rust / ASM inter-dependent pieces of code together.
+
+		Preventive measure against "out of range" errors. Mixing ASM code using branch-instructions (`b`) w/ Rust might
+		lead to "out of range errors" during compilation, where the code that is being branched into gets located too
+		far (not in the vicinity of [-2048, 2047]) from the caller. Apparently, the linker does not make such checks. */
+
+		KEEP(*(.text.hard_fault))
+		KEEP(*(.text.hard_fault_trampoline))
+		KEEP(*(.text.get_stack_frame_current))
+		KEEP(*(.text.get_stack_frame_next))
+
 		*(.text .text.*);
+
 	} > FLASH
 
 	.bss : {
