@@ -34,8 +34,8 @@ SECTIONS {
 		lead to "out of range errors" during compilation, where the code that is being branched into gets located too
 		far (not in the vicinity of [-2048, 2047]) from the caller. Apparently, the linker does not make such checks. */
 
-		KEEP(*(.text.hard_fault))
-		KEEP(*(.text.hard_fault_trampoline))
+		KEEP(*(.text.reset))
+		KEEP(*(.text.reset_trampoline))
 		KEEP(*(.text.get_stack_frame_current))
 		KEEP(*(.text.get_stack_frame_next))
 
