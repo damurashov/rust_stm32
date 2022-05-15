@@ -6,8 +6,7 @@ MEMORY {
 ENTRY(reset_trampoline);
 EXTERN(RESET_VECTOR);
 EXTERN(EXCEPTIONS);
-EXTERN(get_stack_frame_current);
-EXTERN(get_stack_frame_next);
+EXTERN(stack_frame_swap_next)
 
 /* To prevent exception handlers from corrupting PSP stack when in exception mode due to overlaps, a boundary for
 exception handling stack will be used. So, PSP will be initialized w/ PSP + _msp_area_size  */
@@ -36,8 +35,8 @@ SECTIONS {
 
 		KEEP(*(.text.reset))
 		KEEP(*(.text.reset_trampoline))
-		KEEP(*(.text.get_stack_frame_current))
-		KEEP(*(.text.get_stack_frame_next))
+		KEEP(*(.text.pend_sv))
+		KEEP(*(.text.stack_frame_swap_next))
 
 		*(.text .text.*);
 
