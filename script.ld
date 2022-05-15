@@ -37,6 +37,8 @@ SECTIONS {
 		KEEP(*(.text.reset_trampoline))
 		KEEP(*(.text.pend_sv))
 		KEEP(*(.text.stack_frame_swap_next))
+		KEEP(*(.text.hard_fault))
+		KEEP(*(.text.hard_fault_trampoline))
 
 		*(.text .text.*);
 
