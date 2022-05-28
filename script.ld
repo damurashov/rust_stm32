@@ -32,16 +32,16 @@ SECTIONS {
 		Preventive measure against "out of range" errors. Mixing ASM code using branch-instructions (`b`) w/ Rust might
 		lead to "out of range errors" during compilation, where the code that is being branched into gets located too
 		far (not in the vicinity of [-2048, 2047]) from the caller. Apparently, the linker does not make such checks. */
-
+		. = ALIGN(4);
 		KEEP(*(.text.reset))
 		KEEP(*(.text.reset_trampoline))
 		KEEP(*(.text.pend_sv))
 		KEEP(*(.text.stack_frame_swap_next))
 		KEEP(*(.text.hard_fault))
 		KEEP(*(.text.hard_fault_trampoline))
-
 		*(.text .text.*);
 
+		. = ALIGN(4);
 	} > FLASH
 
 	.bss : {
