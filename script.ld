@@ -83,7 +83,6 @@ SECTIONS {
 	}
 }
 
-PROVIDE(reset = default_exception_handler);
 PROVIDE(nmi = default_exception_handler);
 PROVIDE(hard_fault = default_exception_handler);
 PROVIDE(sv_call = default_exception_handler);
